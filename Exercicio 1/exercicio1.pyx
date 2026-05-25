@@ -3,8 +3,9 @@ from cython.parallel import prange
 import time
 import os
 
-# Vou usar o cython dessa forma pq foi a forma que o Tiago passou e eu gostei
-
+""" Vou usar o cython dessa forma pq foi a forma que o Tiago passou e eu gostei
+Vou usar o "prange" para paralelizar o loop e n precisar usar o "pragma" e "reduction(+:sum)"
+"""
 # Captura o número de threads passadas
 num_threads_env = int(os.environ.get("OMP_NUM_THREADS", "1"))
 
