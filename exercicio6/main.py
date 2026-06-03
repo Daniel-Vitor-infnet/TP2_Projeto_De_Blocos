@@ -52,7 +52,7 @@ class EditorDeTexto:
         print("\n--- Texto Atual ---")
         while temp:
             # Coloquei um contador de linha só para ficar melhor apresentavel
-            print(f"{contador:02d} | {temp.content}")
+            print(f"{contador} | {temp.content}")
             temp = temp.next
             contador += 1
         print("-------------------\n")
@@ -158,6 +158,36 @@ class EditorDeTexto:
             
         # Atualiza a linha corrente para a última linha duplicada
         self.linha_a = no_alvo
+        
+        
+    def comando_listar(self, i=None, f=None):
+        if not self.primeira_l:
+            print("O texto está vazio.")
+            return
+
+        temp = self.primeira_l
+        contador = 1
+
+        print("\n--- Listagem do Texto ---")
+        
+        # Caso n tenha paramentros lista tudo
+        if i is None and f is None:
+            while temp:
+                print(f"{contador} ->| {temp.content}")
+                temp = temp.next
+                contador += 1
+        else:
+            # Navega até a linha 'i'(sem imprimir)
+            while temp and contador < i:
+                temp = temp.next
+                contador += 1
+            
+            # Imprime a partir da linha 'i' até chegar na linha 'f'
+            while temp and contador <= f:
+                print(f"{contador} ->| {temp.content}")
+                temp = temp.next
+                contador += 1
+                
 
 # --- TESTANDO O CÓDIGO ---
 if __name__ == "__main__":
@@ -184,3 +214,8 @@ if __name__ == "__main__":
     editor.comando_duplicar(5, 7, 3)
     editor.imprimir()
     
+    print("4. Listando linhas 2 a 6:")
+    editor.comando_listar(2, 6)
+    
+    print("5. Listando todo o texto:")
+    editor.comando_listar()

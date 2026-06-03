@@ -1,3 +1,5 @@
+# Ta bem simplão e sem comentarios esse n dei muita moral pq bom o outro (exercicio 6) vai ter literalmente tudo
+
 class Node:
     def __init__(self, content):
         self.content = content
