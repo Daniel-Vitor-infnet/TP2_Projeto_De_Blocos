@@ -24,12 +24,9 @@ class EditorDeTexto:
             
         if temp:
             self.linha_a = temp
-
+            
+    #  Se 'n' for fornecido vai para a linha 'n' antes de inserir
     def comando_inserir(self, text, n=None):
-        """
-        Entra no modo de inserção. 
-        Se 'n' for fornecido vai para a linha 'n' antes de inserir.
-        """
         if n is not None:
             self.ir_para_linha(n)
 
@@ -106,21 +103,84 @@ class EditorDeTexto:
             self.linha_a = no_anterior
         else:
             self.linha_a = None # O texto todo foi apagado
+            
+            
+    def comando_duplicar(self, i, f, p):
+        if not self.primeira_l:
+            return
+
+        # Coleta os conteúdos das linhas de i a f
+        conteudos_copiados = []
+        no_atual = self.primeira_l
+        contador = 1
+
+        # Navega até a linha i
+        while no_atual and contador < i:
+            no_atual = no_atual.next
+            contador += 1
+
+        if not no_atual: 
+            return 
+
+        # Copia os conteúdos de i até f
+        while no_atual and contador <= f:
+            conteudos_copiados.append(no_atual.content)
+            no_atual = no_atual.next
+            contador += 1
+
+        if not conteudos_copiados:
+            return
+
+        # linha 'p' (alvo)
+        no_alvo = self.primeira_l
+        contador = 1
+        while no_alvo and contador < p:
+            no_alvo = no_alvo.next
+            contador += 1
+
+        if not no_alvo:
+            return
+
+        # Inserir os nós copiados logo após a linha 'p'
+        for texto in conteudos_copiados:
+            novo_no = Node(texto)
+            
+            # Encaixa o novo_no logo após o no_alvo
+            novo_no.next = no_alvo.next
+            novo_no.prev = no_alvo
+            
+            if no_alvo.next:
+                no_alvo.next.prev = novo_no
+                
+            no_alvo.next = novo_no
+            
+            no_alvo = novo_no
+            
+        # Atualiza a linha corrente para a última linha duplicada
+        self.linha_a = no_alvo
 
 # --- TESTANDO O CÓDIGO ---
 if __name__ == "__main__":
     editor = EditorDeTexto()
 
-    print("1. Inserindo linhas iniciais (sem passar o 'n'):")
+    print("1. Inserindo linhas iniciais:")
     editor.comando_inserir('"A natureza,')
     editor.comando_inserir('dizem-nos,')
     editor.comando_inserir('(Rousseau)')
-    editor.comando_inserir('Linha 4 - Excluir A')
-    editor.comando_inserir('Linha 5 - Excluir B')
-    editor.comando_inserir('Linha 6 - Excluir C (vai sobrar)')
+    editor.comando_inserir('Excluir A')
+    editor.comando_inserir('Excluir B')
+    editor.comando_inserir('Excluir C (vai sobrar)')
+    editor.comando_inserir('Duplicar A')
+    editor.comando_inserir('Duplicar B')
+    editor.comando_inserir('Duplicar C')
+    
     editor.imprimir()
 
-
+    print("2. Excluindo linhas 4 a 5:")
     editor.comando_excluir(4, 5)
-
     editor.imprimir()
+    
+    print("3. Duplicando as linhas 5 a 7 para a 3 posição")
+    editor.comando_duplicar(5, 7, 3)
+    editor.imprimir()
+    
