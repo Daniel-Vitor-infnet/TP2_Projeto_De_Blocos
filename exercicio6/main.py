@@ -1,3 +1,5 @@
+import os
+
 class Node:
     def __init__(self, content):
         self.content = content
@@ -188,6 +190,54 @@ class EditorDeTexto:
                 temp = temp.next
                 contador += 1
                 
+    def comando_salvar(self, arq, i=None, f=None):
+        if not self.primeira_l:
+            print("O texto está vazio. Nada para salvar.")
+            return
+
+        diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+        caminho_completo = os.path.join(diretorio_atual, arq)
+
+        try:
+            with open(caminho_completo, 'w', encoding='utf-8') as arquivo:
+                temp = self.primeira_l
+                contador = 1
+
+                if i is None and f is None:
+                    # Se não passou i e f, salva o texto todo
+                    while temp:
+                        arquivo.write(temp.content + '\n')
+                        temp = temp.next
+                else:
+                    # Navega até a linha 'i'
+                    while temp and contador < i:
+                        temp = temp.next
+                        contador += 1
+                    
+                    # Salva as linhas de 'i' até 'f'
+                    while temp and contador <= f:
+                        arquivo.write(temp.content + '\n')
+                        temp = temp.next
+                        contador += 1
+                        
+            print(f"Sucesso: Texto salvo em '{caminho_completo}'.")
+            
+        except Exception as erro:
+            print(f"Ocorreu um erro ao tentar salvar o arquivo: {erro}")
+            
+    def comando_alterar(self, novo_texto, n=None):
+        if not self.primeira_l:
+            print("O texto está vazio. Não há o que alterar.")
+            return
+
+       
+        if n is not None:
+            self.ir_para_linha(n)
+
+        # Só substitui o conteúdo do nó atual
+        if self.linha_a:
+            self.linha_a.content = novo_texto
+                
 
 # --- TESTANDO O CÓDIGO ---
 if __name__ == "__main__":
@@ -219,3 +269,15 @@ if __name__ == "__main__":
     
     print("5. Listando todo o texto:")
     editor.comando_listar()
+    
+    
+    print()
+    print("6. Salvando o texto completo e depois só os trechos 2 a 6:")
+    editor.comando_salvar("texto_Rousseau_completo.txt")
+    editor.comando_salvar("texto_Rousseau_trechos.txt", 2, 6)
+    
+    print()
+    print("7. Alterando a linha 7 para 'Apenas edição':")
+    editor.comando_alterar("Apenas edição", 7)
+    editor.imprimir()
+    
