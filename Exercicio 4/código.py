@@ -59,16 +59,3 @@ plt.xlabel("Tamanho da Lista (N)")
 plt.ylabel("Tempo de Execução (segundos)")
 plt.grid(True)
 plt.show()
-
-"""
-Mesmo problema do quicksort se a escolha do pivo for ruim, o custo pode chegar a O(n^2) mesmo que esteja ordenada.
-
-O caso médio do quickselect é O(n), o select n processsa os dois lados da partição, 
-mas apenas um lado é processado a cada chamada recursiva, o que resulta em uma complexidade linear.
-
-O grafico está em TP2\Documentação\Graficos\QuickSelect.png:
-
-O select tem muitos picos de tempo pq por sorte ele pode cair no elemento de busca logo de cara, 
-ou por azar ele pode cair no pior caso. Por isso esses picos 
-
-"""

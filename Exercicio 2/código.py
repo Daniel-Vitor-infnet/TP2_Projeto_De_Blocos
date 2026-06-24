@@ -13,7 +13,7 @@ async def baixar_arquivo(nome_arquivo):
             f"Download abortado: '{nome_arquivo}' é um arquivo malicioso!")
 
     # b. Simulação de I/O (tempo aleatório)
-    tempo_rede = random.uniform(1, 5)
+    tempo_rede = random.uniform(1, 15)
     await asyncio.sleep(tempo_rede)
 
     # c. Logs de Status
@@ -61,7 +61,7 @@ async def main():
     print("\n================ Downloads Concluídos ================")
     print(f"Arquivos baixados com sucesso: {arq_sucesso}")
     print(f"Tempo total de execução: {temp_f - temp_i:.2f} segundos")
-    print("===================================================")
+    print("=========================================================")
 
 if __name__ == "__main__":
     asyncio.run(main())

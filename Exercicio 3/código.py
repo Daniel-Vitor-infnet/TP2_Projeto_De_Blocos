@@ -48,12 +48,3 @@ plt.xlabel("Tamanho da Lista (N)")
 plt.ylabel("Tempo de Execução (segundos)")
 plt.grid(True)
 plt.show()  # Abre a janela com o gráfico pronto.
-
-
-"""
-O grafico está em TP2\Documentação\Graficos\QuickSort.png:
-
-Como ele processa a lista inteira dividindo e ordenando n tem grandes saltos de tempo (pequenas excessões (picos)) 
-conforme a lista aumenta o tempo aumenta (sendo mais linear).
-
-"""
